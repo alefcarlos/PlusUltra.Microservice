@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Alef Carlos",
+    "classifications": [
+      "Common",
+      "Library",
+      "Web API"
+    ],
+    "name": "PlusUltra Microserviço template",
+    "identity": "PlusUltra.Microservice",
+    "groupIdentity": "PlusUltra.Microservice",
+    "shortName": "plus-ms",
+    "tags": {
+      "language": "C#",
+      "type": "project"
+    },
+    "sourceName": "PlusUltra.Microservice",
+    "preferNameDirectory": true
+}

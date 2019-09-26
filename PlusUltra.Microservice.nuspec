@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>PlusUltra.Microservice</id>
+    <version>$version%</version>
+    <authors>Alef Carlos</authors>
+    <owners>Alef Carlos</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <title>Padrão de estrutura de serviço</title>
+    <description>
+$ dotnet new -i PlusUltra.Microservice
+$ dotnet new clean
+
+    </description>
+    <summary>
+$ dotnet new plus-ms
+    </summary>
+    <language>en-US</language>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="**" exclude="**\bin\**\*;**\obj\**\*;**\*.user;**\*.log;**\.vscode\**\*;" />
+  </files>
+</package>

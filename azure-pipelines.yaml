@@ -1,0 +1,44 @@
+# Build Pipeline for NuGet Packages
+
+name: $(BuildDefinitionName)_$(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)
+resources:
+- repo: self
+
+trigger:
+- master
+
+jobs:
+- job: Build
+  pool:
+    vmImage: vs2017-win2016
+
+  steps:
+  - task: GitVersion@5
+    inputs:
+      runtime: 'core'
+      configFilePath: 'GitVersion.yml'
+      
+  - script: echo %Action%%BuildVersion%
+    displayName: 'Set build version'
+    env:
+      Action: '##vso[build.updatebuildnumber]'
+      BuildVersion: $(GitVersion.NuGetVersionV2)
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Dotnet Build'
+    inputs:
+      projects: '**/*.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Dotnet Pack'
+    inputs:
+      command: pack
+      versioningScheme: off
+
+  - task: NuGetCommand@2
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+      nuGetFeedType: 'external'
+      publishFeedCredentials: 'nuget.org'
+      verbosityPush: 'Normal'
