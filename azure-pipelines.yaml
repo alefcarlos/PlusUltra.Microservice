@@ -33,6 +33,7 @@ jobs:
     displayName: 'Pack nuspec'
     inputs:
       command: 'pack'
+      arguments: ' -Properties version="%BuildVersion%"'
       packagesToPack: 'PlusUltra.Microservice.nuspec'
       versioningScheme: 'off'
 
