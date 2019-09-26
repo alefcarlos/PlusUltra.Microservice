@@ -24,8 +24,11 @@ jobs:
       Action: '##vso[build.updatebuildnumber]'
       BuildVersion: $(GitVersion.NuGetVersionV2)
 
-  - script: echo %Action%%BuildVersion%
+  - script: echo $(BuildVersion)
     displayName: 'try get version'
+
+  - script: echo $(GitVersion.NuGetVersionV2)
+    displayName: 'try get version v2'
 
   - task: DotNetCoreCLI@2
     displayName: 'Dotnet Build'
