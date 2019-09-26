@@ -6,6 +6,7 @@
     <authors>Alef Carlos</authors>
     <owners>Alef Carlos</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/alefcarlos/PlusUltra.Microservice</projectUrl>
     <title>Padrão de estrutura de serviço</title>
     <description>
 $ dotnet new -i PlusUltra.Microservice
