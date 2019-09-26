@@ -1,4 +1,6 @@
-# Instalaçãa
+[![Build Status](https://alefcarlos.visualstudio.com/PlusUltra/_apis/build/status/alefcarlos.PlusUltra.Microservice?branchName=master)](https://alefcarlos.visualstudio.com/PlusUltra/_build/latest?definitionId=4&branchName=master)
+
+# Instalação
 
 Para instalar localmente:
 
