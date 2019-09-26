@@ -33,7 +33,7 @@ jobs:
     displayName: 'Pack nuspec'
     inputs:
       command: 'pack'
-      buildProperties: 'version="$(GitVersion.NuGetVersionV2)"'
+      buildProperties: 'version=$(GitVersion.NuGetVersionV2)'
       packagesToPack: 'PlusUltra.Microservice.nuspec'
       versioningScheme: 'off'
 
