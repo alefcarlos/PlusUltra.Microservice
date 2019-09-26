@@ -27,7 +27,8 @@ jobs:
   - task: DotNetCoreCLI@2
     displayName: 'Dotnet Build'
     inputs:
-      projects: '**/*.csproj'
+      command: 'build'
+      projects: './content/PlusUltra.Microservice.sln'
 
   - task: DotNetCoreCLI@2
     displayName: 'Dotnet Pack'
