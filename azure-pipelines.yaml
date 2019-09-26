@@ -24,12 +24,6 @@ jobs:
       Action: '##vso[build.updatebuildnumber]'
       BuildVersion: $(GitVersion.NuGetVersionV2)
 
-  - script: echo $(BuildVersion)
-    displayName: 'try get version'
-
-  - script: echo $(GitVersion.NuGetVersionV2)
-    displayName: 'try get version v2'
-
   - task: DotNetCoreCLI@2
     displayName: 'Dotnet Build'
     inputs:
@@ -39,7 +33,7 @@ jobs:
     displayName: 'Pack nuspec'
     inputs:
       command: 'pack'
-      buildProperties: 'version="$(BuildVersion)"'
+      buildProperties: 'version="$(GitVersion.NuGetVersionV2)"'
       packagesToPack: 'PlusUltra.Microservice.nuspec'
       versioningScheme: 'off'
 
