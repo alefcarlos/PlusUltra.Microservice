@@ -29,14 +29,15 @@ jobs:
     inputs:
       command: 'build'
       projects: './content/PlusUltra.Microservice.sln'
-
-  - task: DotNetCoreCLI@2
-    displayName: 'Dotnet Pack'
+  - task: NuGetCommand@2
+    displayName: 'Pack nuspec'
     inputs:
-      command: pack
-      versioningScheme: off
+      command: 'pack'
+      packagesToPack: 'PlusUltra.Microservice.nuspec'
+      versioningScheme: 'off'
 
   - task: NuGetCommand@2
+    displayName: 'Nuget push'  
     inputs:
       command: 'push'
       packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
