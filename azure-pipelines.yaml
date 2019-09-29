@@ -5,7 +5,12 @@ resources:
 - repo: self
 
 trigger:
-- master
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+    - README.md
 
 jobs:
 - job: Build

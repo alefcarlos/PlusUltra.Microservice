@@ -10,7 +10,7 @@
     <title>Padrão de estrutura de serviço</title>
     <description>
 $ dotnet new -i PlusUltra.Microservice
-$ dotnet new clean
+$ dotnet new plus-ms -o ProjetoName
 
     </description>
     <summary>

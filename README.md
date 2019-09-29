@@ -8,6 +8,12 @@ Para instalar localmente:
 dotnet new -i ./content/
 ```
 
+Para instalar utilizando o nuget.org:
+
+```
+dotnet new -i PlusUltra.Microservice
+```
+
 E então para usar utilizar:
 
 ```
