@@ -9,7 +9,10 @@
     <projectUrl>https://github.com/alefcarlos/PlusUltra.Microservice</projectUrl>
     <title>Padrão de estrutura de serviço</title>
     <description>
+Para instalar:
 $ dotnet new -i PlusUltra.Microservice
+
+Para usar:
 $ dotnet new plus-ms -o ProjetoName
 
     </description>
