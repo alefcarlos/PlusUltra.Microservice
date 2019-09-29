@@ -14,7 +14,7 @@ $ dotnet new plus-ms -o ProjetoName
 
     </description>
     <summary>
-$ dotnet new plus-ms
+$ dotnet new plus-ms -o ProjetoName
     </summary>
     <language>en-US</language>
     <packageTypes>
