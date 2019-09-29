@@ -4,6 +4,7 @@ name: $(BuildDefinitionName)_$(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)
 resources:
   repositories:
     - repository: templates
+      endpoint: 'Github Commit'
       type: github
       name: AlefCarlos/PlusUltra.Azure.Templates
 
