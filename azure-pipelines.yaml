@@ -2,7 +2,10 @@
 
 name: $(BuildDefinitionName)_$(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)
 resources:
-- repo: self
+  repositories:
+    - repository: templates
+      type: github
+      name: AlefCarlos/PlusUltra.Azure.Templates
 
 trigger:
   branches:
@@ -34,19 +37,8 @@ jobs:
     inputs:
       command: 'build'
       projects: './content/PlusUltra.Microservice.sln'
-  - task: NuGetCommand@2
-    displayName: 'Pack nuspec'
-    inputs:
-      command: 'pack'
-      buildProperties: 'version=$(GitVersion.NuGetVersionV2)'
-      packagesToPack: 'PlusUltra.Microservice.nuspec'
-      versioningScheme: 'off'
 
-  - task: NuGetCommand@2
-    displayName: 'Nuget push'  
-    inputs:
-      command: 'push'
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-      nuGetFeedType: 'external'
-      publishFeedCredentials: 'nuget.org'
-      verbosityPush: 'Normal'
+  - template: nuget-nuspec.yaml@templates
+    parameters:
+      version: $(GitVersion.NuGetVersionV2)
+      nuspec: 'PlusUltra.Microservice.nuspec'
