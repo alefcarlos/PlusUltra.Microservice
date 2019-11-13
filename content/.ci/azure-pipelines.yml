@@ -1,0 +1,47 @@
+resources:
+  repositories:
+    - repository: templates
+      endpoint: 'LeonardoOliveiraGitHub'
+      type: github
+      name: OliveiraLeonardo17/AzurePipelines.Templates
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+    - README.md
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Build
+
+  jobs:
+  - job:
+  
+    steps:
+    - template: steps/DotnetDockerVerBuildLoginPush.yml@templates
+      parameters:
+        configFilePath: '$(System.DefaultWorkingDirectory)/.ci/GitVersion.yml'
+        repository: 'vmazzi/campaign-admin-api'
+        Dockerfile: '**/Api.Dockerfile'
+        tags: |
+          latest
+          $(GitVersion.NuGetVersionV2)
+        addPipelineData: false
+        buildReason: $(Build.Reason)
+
+- stage: Deploy
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  jobs:
+  - job: 
+    steps:
+    - template: steps/HelmDeployForKubernetes.yml@templates
+      parameters:
+        kubernetesServiceConnection: 'RifeAi Kubernetes Production'
+        chartPath: '$(System.DefaultWorkingDirectory)/.infra/k8s/helm/campaign-admin-api'
+        releaseName: 'campaign-admin-api'
+        valueFile: '$(System.DefaultWorkingDirectory)/.infra/k8s/helm/campaign-admin-api/values.yaml'

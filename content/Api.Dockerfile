@@ -1,9 +1,9 @@
-FROM microsoft/dotnet:2.2-sdk as builder
+FROM microsoft/dotnet:3.0-sdk as builder
 COPY . /
 WORKDIR /src/PlusUltra.MicroserviceApi
 RUN dotnet publish --output /app/ -c Release --no-restore
 
-FROM microsoft/dotnet:2.2-aspnetcore-runtime-alpine
+FROM microsoft/dotnet:3.0-aspnetcore-runtime-alpine
 WORKDIR /app
 COPY --from=builder /app .
 
