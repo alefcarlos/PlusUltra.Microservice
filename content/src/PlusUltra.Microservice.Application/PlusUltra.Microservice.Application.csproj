@@ -4,8 +4,18 @@
     <ProjectReference Include="..\PlusUltra.Microservice.Domain\PlusUltra.Microservice.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Response\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PlusUltra.Mediatr" Version="0.1.9" />
+  </ItemGroup>
+
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
 </Project>

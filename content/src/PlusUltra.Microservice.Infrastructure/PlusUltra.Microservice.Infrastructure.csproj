@@ -1,11 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PlusUltra.Microservice.Application\PlusUltra.Microservice.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Entities\" />
+    <Folder Include="Data\QueryBuilders\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PlusUltra.Data.SqlKata.PostgresSQL" Version="0.1.14" />
   </ItemGroup>
 
 </Project>

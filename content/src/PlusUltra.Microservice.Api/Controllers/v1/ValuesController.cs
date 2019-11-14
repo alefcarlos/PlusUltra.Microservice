@@ -1,43 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using Flunt.Notifications;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PlusUltra.WebApi.Controllers;
 
 namespace PlusUltra.Microservice.Controllers.v1
 {
-    [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/[controller]")]
-    [ApiController]
-    public class ValuesController : ControllerBase
+    [Authorize(JwtBearerDefaults.AuthenticationScheme, Roles = "PlusUltra.Microservice.Api")]
+    [Route("[controller]")]
+    public class ValuesController : WebApiController
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ValuesController(IMediator mediator)
         {
-            return new string[] { "value1", "value2" };
+            this.mediator = mediator;
         }
+        private readonly IMediator mediator;
 
-        // GET api/values/5
+        /// <summary>
+        /// Exemplo de Get
+        /// </summary>
+        /// <param name="id">ID</param>
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [Authorize(Roles = "PlusUltra.Microservice.Api")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(List<Notification>), (int)HttpStatusCode.UnprocessableEntity)]
+        [Produces("application/json")]
+        public async Task<IActionResult> Get(Guid id)
         {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return NoContent();
         }
     }
 }

@@ -2,32 +2,45 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using PlusUltra.Swagger.Extensions;
 using PlusUltra.WebApi.Hosting;
-using Swashbuckle.AspNetCore.Swagger;
+using PlusUltra.Data.SqlKata.PostgresSQL;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.Extensions.Hosting;
+using PlusUltra.Microservice.Infrastructure.Data.Repositories;
 
-namespace PlusUltra.Microservice
+namespace PlusUltra.Microservice.Api
 {
-    public class Startup : PlusUltra.WebApi.Hosting.StartupBase
+    public class Startup : WebApiStartup
     {
-        public Startup(IConfiguration configuration, ILoggerFactory factory) : base(configuration, factory, useAuthentication: false)
+        public Startup(IConfiguration configuration)
+    :       base(configuration, useAuthentication: true)
         {
         }
 
-        public override void AfterConfigureServices(IServiceCollection services, ILoggerFactory loggerFactory)
+        public override void AfterConfigureServices(IServiceCollection services)
         {
-            services.AddDocumentation(new Info
+            services.AddDocumentation(new OpenApiInfo
             {
-                Title = "Template.Microservice"
+                Title = "Titulo do Micro Serviço",
+                Description = "Descrição do Micro Serviço.",
             });
+
+            services.AddPostgressSQL(Configuration);
+            services.AddRepositories();
+
+            var validators = FluentValidation.AssemblyScanner.FindValidatorsInAssembly(typeof(Startup).Assembly);
+            validators.ForEach(v => services.AddTransient(v.InterfaceType, v.ValidatorType));
         }
 
-        public override void BeforeConfigureApp(IApplicationBuilder app, IHostingEnvironment env)
+        public override void BeforeConfigureApp(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
+                IdentityModelEventSource.ShowPII = true;
             }
             else
             {
@@ -35,10 +48,24 @@ namespace PlusUltra.Microservice
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+            app.UsePathBase("/v1/");
         }
 
-        public override void AfterConfigureApp(IApplicationBuilder app, IHostingEnvironment env)
+        public override void AfterConfigureApp(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            app.UseDocumentation(configuration: c =>
+            {
+                c.DocumentTitle = "API";
+            });
+        }
+
+        public override void ConfigureAfterRouting(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            app.UseAppMetricsEndpointRoutesResolver();
+        }
+
+        public override void MapEndpoints(IEndpointRouteBuilder endpoints)
         {
 
         }
